@@ -1,6 +1,6 @@
-;; The first three lines of this file were inserted by DrScheme. They record metadata
+;; The first three lines of this file were inserted by DrRacket. They record metadata
 ;; about the language level of this file in a form that our tools can easily process.
-#reader(lib "htdp-beginner-reader.ss" "lang")((modname section2) (read-case-sensitive #t) (teachpacks ((lib "convert.ss" "teachpack" "htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "convert.ss" "teachpack" "htdp")))))
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname section2) (read-case-sensitive #t) (teachpacks ((lib "convert.rkt" "teachpack" "htdp"))) (htdp-settings #(#t constructor repeating-decimal #f #t none #f ((lib "convert.rkt" "teachpack" "htdp")))))
 ;; Fahrenheit->Celsius : number -> number
 ;; consumes a temperature measured in Fahrenheit and produces the Celsius equivalent.
 ;; (define (Fahrenheit->Celsius x) ...)
@@ -36,6 +36,45 @@
 ;; Example 3: (triangle 5 2) should produce 5
 (define (triangle length height)
   (/ (* length height) 2))
+
+#|
+sum-coins: number number number number -> number
+Consumes the number of pennies, nickels, dimes and quarters 
+and returns the total amount of money.
+(define (sum-coins pennies nickels dimes quarters) ...)
+Example: (sum-coins 0 0 0 0) should produce 0
+Examlpe: (sum-coins 1 1 1 1) should produce 41
+|#
+(define (sum-coins p n d q)
+  (+ p (* 5 n) (* 10 d) (* 25 q))) 
+
+;;Tests
+;;(equal? (sum-coins 0 0 0 0) 0)
+;;(equal? (sum-coins 1 1 1 1) 41)
+
+;; total-profit: number -> numbers
+;; consumes number of attendees and produces theater's income using these rules:
+;; each attendee pays $5 per ticket. every performance costs the theater $20 plus
+;; $.50 per attendee.
+;; (define (total-profit attendees) ...)
+;; Example: 1 attendee should produce 5 - (20 + .5) = -15.5
+;; Example: 10 attendees should produce 5(10) - (20 + 10(.5)) = 25
+(define TICKET-PRICE 5)
+(define ATTENDEE-COST .50)
+(define PERFORMANCE-COST 20)
+
+(define (total-income attendees)
+  (* attendees TICKET-PRICE))
+
+(define (total-costs attendees)
+  (+ PERFORMANCE-COST (* attendees ATTENDEE-COST)))
+
+(define (total-profit attendees)
+  (- (total-income attendees) (total-costs attendees)))
+
+;;Tests
+;;(equal? (total-profit 1) -15.5)
+;;(equal? (total-profit 10) 25)
 
 ;;Tests:
 ;;(equal? (triangle 0 0) 0)
